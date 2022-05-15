@@ -30,6 +30,8 @@ dependencies {
 	testImplementation("org.scilab.forge:jlatexmath:1.0.7")
 	"pdfRuntimeOnly"("org.apache.xmlgraphics:fop:2.7")
 	"pdfRuntimeOnly"("org.apache.xmlgraphics:batik-all:1.14")
+	// a dependency on Jackson Databind
+	implementation( "com.fasterxml.jackson.core:jackson-databind:2.13.2.2")
 }
 
 repositories {
