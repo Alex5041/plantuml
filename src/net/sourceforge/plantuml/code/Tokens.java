@@ -205,7 +205,7 @@ public class Tokens {
 			System.err.println(string);
 			throw new IllegalArgumentException(string);
 		}
-		if (string.matches("[!@]?[A-Za-z]+") == false) {
+		if (!string.matches("[!@]?[A-Za-z]+")) {
 			System.err.println(string);
 			throw new IllegalArgumentException(string);
 		}
