@@ -1,4 +1,4 @@
-PlantUML
+PlantUML Fork
 ========
 
 [![GitHub Sponsors](https://img.shields.io/github/sponsors/plantuml?logo=github)](https://github.com/sponsors/plantuml/)
