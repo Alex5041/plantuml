@@ -1,8 +1,8 @@
 package net.sourceforge.plantuml.picoweb;
 
-import net.sourceforge.plantuml.json.Json;
-import net.sourceforge.plantuml.json.JsonArray;
-import net.sourceforge.plantuml.json.JsonObject;
+import com.eclipsesource.json.Json;
+import com.eclipsesource.json.JsonArray;
+import com.eclipsesource.json.JsonObject;
 
 /**
  * POJO of the json sent to "POST /render"

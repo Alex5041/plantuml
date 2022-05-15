@@ -34,7 +34,7 @@
  */
 package net.sourceforge.plantuml.tim;
 
-import net.sourceforge.plantuml.json.JsonArray;
+import com.eclipsesource.json.JsonArray;
 import net.sourceforge.plantuml.tim.iterator.CodePosition;
 
 public class ExecutionContextForeach {

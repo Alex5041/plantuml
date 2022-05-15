@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.objectdiagram.command;
 
+import com.eclipsesource.json.Json;
 import net.sourceforge.plantuml.FontParam;
 import net.sourceforge.plantuml.StringLocated;
 import net.sourceforge.plantuml.UrlBuilder;
@@ -55,9 +56,7 @@ import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Stereotype;
 import net.sourceforge.plantuml.graphic.color.ColorParser;
 import net.sourceforge.plantuml.graphic.color.ColorType;
-import net.sourceforge.plantuml.json.Json.DefaultHandler;
-import net.sourceforge.plantuml.json.JsonParser;
-import net.sourceforge.plantuml.json.JsonValue;
+import com.eclipsesource.json.JsonValue;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 import net.sourceforge.plantuml.ugraphic.color.NoSuchColorException;
 
@@ -125,9 +124,7 @@ public class CommandCreateJson extends CommandMultilines2<AbstractClassOrObjectD
 		}
 		sb.append("}");
 
-		final DefaultHandler handler = new DefaultHandler();
-		new JsonParser(handler).parse(sb.toString());
-		final JsonValue json = handler.getValue();
+		final JsonValue json = Json.parse(sb.toString());
 		System.err.println("foo=" + json);
 		((BodierJSon) entity1.getBodier()).setJson(json);
 

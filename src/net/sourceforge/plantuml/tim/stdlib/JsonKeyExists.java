@@ -39,8 +39,8 @@ import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.json.JsonObject;
-import net.sourceforge.plantuml.json.JsonValue;
+import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.TContext;

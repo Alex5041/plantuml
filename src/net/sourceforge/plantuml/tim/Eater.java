@@ -39,8 +39,8 @@ import java.util.List;
 
 import net.sourceforge.plantuml.LineLocation;
 import net.sourceforge.plantuml.StringLocated;
-import net.sourceforge.plantuml.json.Json;
-import net.sourceforge.plantuml.json.JsonValue;
+import com.eclipsesource.json.Json;
+import com.eclipsesource.json.JsonValue;
 import net.sourceforge.plantuml.tim.expression.TValue;
 import net.sourceforge.plantuml.tim.expression.Token;
 import net.sourceforge.plantuml.tim.expression.TokenStack;

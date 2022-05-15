@@ -36,7 +36,7 @@ package net.sourceforge.plantuml.tim.expression;
 
 import java.util.Objects;
 
-import net.sourceforge.plantuml.json.JsonValue;
+import com.eclipsesource.json.JsonValue;
 
 public final class TValue {
 

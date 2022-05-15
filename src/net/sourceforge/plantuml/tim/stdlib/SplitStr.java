@@ -40,7 +40,7 @@ import java.util.Set;
 import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.json.JsonArray;
+import com.eclipsesource.json.JsonArray;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.TContext;

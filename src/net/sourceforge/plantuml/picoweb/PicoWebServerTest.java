@@ -1,7 +1,7 @@
 package net.sourceforge.plantuml.picoweb;
 
-import net.sourceforge.plantuml.json.Json;
-import net.sourceforge.plantuml.json.JsonObject;
+import com.eclipsesource.json.Json;
+import com.eclipsesource.json.JsonObject;
 
 import javax.imageio.ImageIO;
 import javax.imageio.stream.MemoryCacheImageInputStream;

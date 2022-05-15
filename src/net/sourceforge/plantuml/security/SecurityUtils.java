@@ -59,8 +59,8 @@ import javax.swing.ImageIcon;
 
 import net.sourceforge.plantuml.Log;
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.json.Json;
-import net.sourceforge.plantuml.json.JsonValue;
+import com.eclipsesource.json.Json;
+import com.eclipsesource.json.JsonValue;
 import net.sourceforge.plantuml.security.authentication.SecurityAccessInterceptor;
 import net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
 import net.sourceforge.plantuml.security.authentication.SecurityAuthorizeManager;
@@ -96,7 +96,7 @@ public class SecurityUtils {
 	 * Whitelist of paths from where scripts can load data.
 	 */
 	public static final String ALLOWLIST_LOCAL_PATHS = "plantuml.allowlist.path";
-	
+
 	/**
 	 * Whitelist of urls
 	 */

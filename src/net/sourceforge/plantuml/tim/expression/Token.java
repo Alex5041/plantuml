@@ -34,7 +34,7 @@
  */
 package net.sourceforge.plantuml.tim.expression;
 
-import net.sourceforge.plantuml.json.JsonValue;
+import com.eclipsesource.json.JsonValue;
 
 public class Token {
 

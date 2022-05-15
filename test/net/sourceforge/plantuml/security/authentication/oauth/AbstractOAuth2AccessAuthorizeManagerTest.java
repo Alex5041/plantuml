@@ -1,8 +1,8 @@
 package net.sourceforge.plantuml.security.authentication.oauth;
 
-import net.sourceforge.plantuml.json.Json;
-import net.sourceforge.plantuml.json.JsonObject;
-import net.sourceforge.plantuml.json.JsonValue;
+import com.eclipsesource.json.Json;
+import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
 import net.sourceforge.plantuml.security.authentication.SecurityAuthentication;
 import net.sourceforge.plantuml.security.authentication.SecurityCredentials;
 import org.junit.jupiter.api.Test;

@@ -35,9 +35,9 @@
 package net.sourceforge.plantuml.tim;
 
 import net.sourceforge.plantuml.LineLocation;
-import net.sourceforge.plantuml.json.JsonArray;
-import net.sourceforge.plantuml.json.JsonObject;
-import net.sourceforge.plantuml.json.JsonValue;
+import com.eclipsesource.json.JsonArray;
+import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
 import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class VariableManager {

@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.hcl;
@@ -43,11 +43,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.sourceforge.plantuml.json.Json;
-import net.sourceforge.plantuml.json.JsonArray;
-import net.sourceforge.plantuml.json.JsonObject;
-import net.sourceforge.plantuml.json.JsonString;
-import net.sourceforge.plantuml.json.JsonValue;
+import com.eclipsesource.json.Json;
+import com.eclipsesource.json.JsonArray;
+import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
 
 public class HclParser {
 
@@ -105,14 +104,22 @@ public class HclParser {
 			if (value instanceof HclTerm && ((HclTerm) value).is(SymbolType.COMMA))
 				continue;
 
-			if (value instanceof String)
+			if (value instanceof String) {
 				args.add((String) value);
-			else if (value instanceof JsonArray)
-				args.add((JsonArray) value);
-			else if (value instanceof JsonObject)
-				args.add((JsonObject) value);
-			else if (value instanceof JsonString)
-				args.add((JsonString) value);
+				continue;
+			}
+
+
+			if (!(value instanceof JsonValue)) throw new AssertionError();
+
+			JsonValue jvalue = (JsonValue) value;
+
+			if (jvalue.isArray())
+				args.add(jvalue.asArray());
+			else if (jvalue.isObject())
+				args.add(jvalue.asObject());
+			else if (jvalue.isString())
+				args.add(jvalue.asString());
 			else
 				throw new IllegalStateException();
 
@@ -131,14 +138,21 @@ public class HclParser {
 				if (next.is(SymbolType.EQUALS, SymbolType.TWO_POINTS) == false)
 					throw new IllegalStateException(current.toString());
 				final Object value = getValue(it);
-				if (value instanceof String)
+				if (value instanceof String) {
 					result.add(fieldName, (String) value);
-				else if (value instanceof JsonArray)
-					result.add(fieldName, (JsonArray) value);
-				else if (value instanceof JsonObject)
-					result.add(fieldName, (JsonObject) value);
-				else if (value instanceof JsonString)
-					result.add(fieldName, (JsonString) value);
+					continue;
+				}
+
+				if (!(value instanceof JsonValue)) throw new AssertionError();
+
+				JsonValue jvalue = (JsonValue) value;
+
+				if (jvalue.isArray())
+					result.add(fieldName,jvalue.asArray());
+				else if (jvalue.isObject())
+					result.add(fieldName,jvalue.asObject());
+				else if (jvalue.isString())
+					result.add(fieldName,jvalue.asString());
 				else
 					throw new IllegalStateException();
 
