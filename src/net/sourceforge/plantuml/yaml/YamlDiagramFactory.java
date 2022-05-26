@@ -72,7 +72,7 @@ public class YamlDiagramFactory extends PSystemAbstractFactory {
 			it.next();
 			while (true) {
 				final String line = it.next();
-				if (it.hasNext() == false)
+				if (!it.hasNext())
 					break;
 
 				if (line.startsWith("#highlight ")) {
@@ -82,7 +82,7 @@ public class YamlDiagramFactory extends PSystemAbstractFactory {
 				list.add(line);
 			}
 			yaml = new SimpleYamlParser().parse(list);
-		} catch (Exception e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
 		final JsonDiagram result = new JsonDiagram(style, source, UmlDiagramType.YAML, yaml, highlighted);

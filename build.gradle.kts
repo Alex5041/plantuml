@@ -6,6 +6,7 @@
 // gradle test
 val javacRelease = (project.findProperty("javacRelease") ?: "8") as String
 
+
 plugins {
 	java
 	`maven-publish`
@@ -24,8 +25,8 @@ java {
 }
 
 dependencies {
+	implementation("com.eclipsesource.minimal-json:minimal-json:0.9.5")
 	compileOnly("org.apache.ant:ant:1.10.12")
-	compileOnly("com.eclipsesource.minimal-json:minimal-json:0.9.5")
 	testImplementation("org.assertj:assertj-core:3.22.0")
 	testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
 	testImplementation("org.scilab.forge:jlatexmath:1.0.7")
@@ -38,8 +39,6 @@ repositories {
 	mavenCentral()
 }
 
-dependencies {
-}
 
 sourceSets {
 	main {

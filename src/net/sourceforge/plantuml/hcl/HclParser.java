@@ -50,7 +50,7 @@ import com.eclipsesource.json.JsonValue;
 
 public class HclParser {
 
-	private final List<HclTerm> terms = new ArrayList<HclTerm>();
+	private final List<HclTerm> terms = new ArrayList<>();
 
 	public HclParser(Iterable<Character> source) {
 		parse(source.iterator());
@@ -59,8 +59,9 @@ public class HclParser {
 	public JsonObject parseMe() {
 		final Map<String, JsonObject> map = new LinkedHashMap<>();
 		final Iterator<HclTerm> it = terms.iterator();
-		while (it.hasNext())
+		while (it.hasNext()) {
 			map.putAll(getModuleOrSomething(it));
+		}
 
 		if (map.size() == 1)
 			return map.values().iterator().next();
@@ -77,9 +78,9 @@ public class HclParser {
 		while (true) {
 			final HclTerm current = it.next();
 			if (current.is(SymbolType.STRING_QUOTED))
-				name.append("\"" + current.getData() + "\" ");
+				name.append("\"").append(current.getData()).append("\" ");
 			else if (current.is(SymbolType.STRING_SIMPLE))
-				name.append(current.getData() + " ");
+				name.append(current.getData()).append(" ");
 			else if (current.is(SymbolType.CURLY_BRACKET_OPEN)) {
 				return Collections.singletonMap(name.toString().trim(), getBracketData(it));
 			} else
@@ -89,13 +90,13 @@ public class HclParser {
 
 	private JsonValue getFunctionData(String functionName, Iterator<HclTerm> it) {
 		final JsonArray args = new JsonArray();
-		if (it.next().is(SymbolType.PARENTHESIS_OPEN) == false)
+		if (!it.next().is(SymbolType.PARENTHESIS_OPEN))
 			throw new IllegalStateException();
 
 		while (true) {
 			final Object value = getValue(it);
 			if (value instanceof HclTerm && ((HclTerm) value).is(SymbolType.PARENTHESIS_CLOSE)) {
-				if (args.size() == 0)
+				if (args.isEmpty())
 					return Json.value(functionName + "()");
 				final JsonObject result = new JsonObject();
 				result.add(functionName + "()", args);
@@ -135,7 +136,7 @@ public class HclParser {
 			if (current.is(SymbolType.STRING_SIMPLE) || current.is(SymbolType.STRING_QUOTED)) {
 				final String fieldName = current.getData();
 				final HclTerm next = it.next();
-				if (next.is(SymbolType.EQUALS, SymbolType.TWO_POINTS) == false)
+				if (!next.is(SymbolType.EQUALS, SymbolType.TWO_POINTS))
 					throw new IllegalStateException(current.toString());
 				final Object value = getValue(it);
 				if (value instanceof String) {
@@ -163,19 +164,23 @@ public class HclParser {
 
 	private Object getValue(Iterator<HclTerm> it) {
 		final HclTerm current = it.next();
-		if (current.is(SymbolType.COMMA, SymbolType.PARENTHESIS_CLOSE))
-			return current;
-		if (current.is(SymbolType.STRING_QUOTED))
-			return current.getData();
-		if (current.is(SymbolType.STRING_SIMPLE))
-			return current.getData();
-		if (current.is(SymbolType.SQUARE_BRACKET_OPEN))
-			return getArray(it);
-		if (current.is(SymbolType.CURLY_BRACKET_OPEN))
-			return getBracketData(it);
-		if (current.is(SymbolType.FUNCTION_NAME))
-			return getFunctionData(current.getData(), it);
-		throw new IllegalStateException(current.toString());
+		switch (current.getType()) {
+			case COMMA:
+				if (current.is(SymbolType.COMMA, SymbolType.PARENTHESIS_CLOSE)) {
+					return current;
+				}
+			case STRING_QUOTED:
+			case STRING_SIMPLE:
+				return current.getData();
+			case SQUARE_BRACKET_OPEN:
+				return getArray(it);
+			case CURLY_BRACKET_OPEN:
+				return getBracketData(it);
+			case FUNCTION_NAME:
+				return getFunctionData(current.getData(), it);
+			default:
+				throw new IllegalStateException(current.toString());
+		}
 	}
 
 	private Object getArray(Iterator<HclTerm> it) {
@@ -245,28 +250,30 @@ public class HclParser {
 	}
 
 	private SymbolType getType(final char c) {
-		if (Character.isSpaceChar(c))
-			return SymbolType.SPACE;
-		else if (c == '{')
-			return SymbolType.CURLY_BRACKET_OPEN;
-		else if (c == '}')
-			return SymbolType.CURLY_BRACKET_CLOSE;
-		else if (c == '[')
-			return SymbolType.SQUARE_BRACKET_OPEN;
-		else if (c == ']')
-			return SymbolType.SQUARE_BRACKET_CLOSE;
-		else if (c == '(')
-			return SymbolType.PARENTHESIS_OPEN;
-		else if (c == ')')
-			return SymbolType.PARENTHESIS_CLOSE;
-		else if (c == '=')
-			return SymbolType.EQUALS;
-		else if (c == ',')
-			return SymbolType.COMMA;
-		else if (c == ':')
-			return SymbolType.TWO_POINTS;
-
-		return null;
+		switch (c) {
+			case ' ':
+				return SymbolType.SPACE;
+			case '{':
+				return SymbolType.CURLY_BRACKET_OPEN;
+			case '}':
+				return SymbolType.CURLY_BRACKET_CLOSE;
+			case '[':
+				return SymbolType.SQUARE_BRACKET_OPEN;
+			case ']':
+				return SymbolType.SQUARE_BRACKET_CLOSE;
+			case '(':
+				return SymbolType.PARENTHESIS_OPEN;
+			case ')':
+				return SymbolType.PARENTHESIS_CLOSE;
+			case '=':
+				return SymbolType.EQUALS;
+			case ',':
+				return SymbolType.COMMA;
+			case ':':
+				return SymbolType.TWO_POINTS;
+			default:
+				return null;
+		}
 	}
 
 }

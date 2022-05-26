@@ -100,27 +100,9 @@ public class CommandCreateJson extends CommandMultilines2<AbstractClassOrObjectD
 		final StringBuilder sb = new StringBuilder("{");
 		for (StringLocated sl : lines) {
 			final String line = sl.getString();
-			assert line.length() > 0;
+			assert !line.isEmpty();
 			System.err.println("l=" + line);
 			sb.append(line);
-//			entity1.getBodier().addFieldOrMethod(line);
-//			if (BodierMap.getLinkedEntry(line) != null) {
-//				final String linkStr = BodierMap.getLinkedEntry(line);
-//				final int x = line.indexOf(linkStr);
-//				final String key = line.substring(0, x).trim();
-//				final String dest = line.substring(x + linkStr.length()).trim();
-//				final Ident ident2 = diagram.buildLeafIdentSpecial(dest);
-//				final ILeaf entity2 = diagram.getEntityFactory().getLeafStrict(ident2);
-//				if (entity2 == null)
-//					return CommandExecutionResult.error("No such entity " + ident2.getName());
-//
-//				final LinkType linkType = new LinkType(LinkDecor.ARROW, LinkDecor.NONE);
-//				final int length = linkStr.length() - 2;
-//				final Link link = new Link(entity1, entity2, linkType, Display.NULL, length,
-//						diagram.getSkinParam().getCurrentStyleBuilder());
-//				link.setPortMembers(key, null);
-//				diagram.addLink(link);
-//			}
 		}
 		sb.append("}");
 

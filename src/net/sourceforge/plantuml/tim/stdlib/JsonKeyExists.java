@@ -61,20 +61,20 @@ public class JsonKeyExists extends SimpleReturnFunction {
 	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values,
 			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
 		final TValue arg0 = values.get(0);
-		if (arg0.isJson() == false)
+		if (!arg0.isJson())
 			return TValue.fromBoolean(false);
 
 		final JsonValue json = arg0.toJson();
-		if (json.isObject() == false)
+		if (!json.isObject())
 			return TValue.fromBoolean(false);
 
 		final TValue arg1 = values.get(1);
-		if (arg1.isString() == false)
+		if (!arg1.isString())
 			return TValue.fromBoolean(false);
 
 		final String keyname = arg1.toString();
 		final JsonObject object = (JsonObject) json;
-		if (object.contains(keyname))
+		if (object.get(keyname) != null)
 			return TValue.fromBoolean(true);
 		return TValue.fromBoolean(false);
 	}

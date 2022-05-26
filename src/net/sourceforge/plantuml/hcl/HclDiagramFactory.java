@@ -68,25 +68,17 @@ public class HclDiagramFactory extends PSystemAbstractFactory {
 			it.next();
 			while (true) {
 				final String line = it.next();
-				if (it.hasNext() == false)
+				if (!it.hasNext())
 					break;
 
 				list.add(line);
 			}
 			HclParser parser = new HclParser(list);
 			data = parser.parseMe();
-		} catch (Exception e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
-		final JsonDiagram result = new JsonDiagram(style, source, UmlDiagramType.HCL, data, highlighted);
-//		if (styleExtractor != null) {
-//			styleExtractor.applyStyles(result.getSkinParam());
-//			final String title = styleExtractor.getTitle();
-//			if (title != null)
-//				result.setTitle(DisplayPositioned.single(Display.getWithNewlines(title), HorizontalAlignment.CENTER,
-//						VerticalAlignment.CENTER));
-//		}
-		return result;
+		return new JsonDiagram(style, source, UmlDiagramType.HCL, data, highlighted);
 	}
 
 }
