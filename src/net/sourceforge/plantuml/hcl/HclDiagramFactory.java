@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.hcl;
@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.command.PSystemAbstractFactory;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.json.JsonValue;
+import com.eclipsesource.json.JsonValue;
 import net.sourceforge.plantuml.jsondiagram.JsonDiagram;
 import net.sourceforge.plantuml.jsondiagram.StyleExtractor;
 
@@ -68,25 +68,17 @@ public class HclDiagramFactory extends PSystemAbstractFactory {
 			it.next();
 			while (true) {
 				final String line = it.next();
-				if (it.hasNext() == false)
+				if (!it.hasNext())
 					break;
 
 				list.add(line);
 			}
 			HclParser parser = new HclParser(list);
 			data = parser.parseMe();
-		} catch (Exception e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
-		final JsonDiagram result = new JsonDiagram(style, source, UmlDiagramType.HCL, data, highlighted);
-//		if (styleExtractor != null) {
-//			styleExtractor.applyStyles(result.getSkinParam());
-//			final String title = styleExtractor.getTitle();
-//			if (title != null)
-//				result.setTitle(DisplayPositioned.single(Display.getWithNewlines(title), HorizontalAlignment.CENTER,
-//						VerticalAlignment.CENTER));
-//		}
-		return result;
+		return new JsonDiagram(style, source, UmlDiagramType.HCL, data, highlighted);
 	}
 
 }

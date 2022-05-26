@@ -36,8 +36,8 @@
 package net.sourceforge.plantuml.security.authentication;
 
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.json.JsonObject;
-import net.sourceforge.plantuml.json.JsonValue;
+import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
 
 import java.net.InetSocketAddress;
 import java.net.Proxy;

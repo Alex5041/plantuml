@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.style;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -70,12 +71,17 @@ public class StyleLoader {
 	public StyleBuilder loadSkin(String filename) throws IOException {
 		this.styleBuilder = new StyleBuilder(skinParam);
 
-		final InputStream internalIs = getInputStreamForStyle(filename);
+		File file = new File(filename);
+		String path = filename;
+		if (!file.exists()) {
+			path = "skin/" + filename;
+		}
+		final InputStream internalIs = getInputStreamForStyle(path);
 		if (internalIs == null) {
 			Log.error("No .skin file seems to be available");
 			throw new NoStyleAvailableException();
 		}
-		final BlocLines lines2 = BlocLines.load(internalIs, new LineLocationImpl(filename, null));
+		final BlocLines lines2 = BlocLines.load(internalIs, new LineLocationImpl(path, null));
 		loadSkinInternal(lines2);
 		if (this.styleBuilder == null) {
 			Log.error("No .skin file seems to be available");
@@ -179,8 +185,8 @@ public class StyleLoader {
 				final String value = variables.value(mPropertyAndValue.group(2));
 				if (key != null && maps.size() > 0)
 					maps.get(maps.size() - 1).put(key, //
-							scheme == StyleScheme.REGULAR ? //
-									ValueImpl.regular(value, counter) : ValueImpl.dark(value, counter));
+									scheme == StyleScheme.REGULAR ? //
+													ValueImpl.regular(value, counter) : ValueImpl.dark(value, counter));
 
 				continue;
 			}

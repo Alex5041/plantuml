@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -40,10 +40,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.json.JsonArray;
-import net.sourceforge.plantuml.json.JsonObject;
-import net.sourceforge.plantuml.json.JsonString;
-import net.sourceforge.plantuml.json.JsonValue;
+import com.eclipsesource.json.JsonArray;
+import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
 
 public class SimpleYamlParser {
 
@@ -75,7 +74,6 @@ public class SimpleYamlParser {
 
 	private void parseSingleLine(String s) {
 		final int indent = getIndent(s);
-//		System.err.println("s=" + s);
 
 		if (isListStrict(s)) {
 			strictMuteToArray(indent);
@@ -116,15 +114,14 @@ public class SimpleYamlParser {
 		final Pattern p1 = Pattern.compile("^\\s*[-]\\s*(\\S.*)$");
 		final Matcher m1 = p1.matcher(s);
 		if (m1.matches()) {
-			final String name = m1.group(1).trim();
-			return name;
+			return m1.group(1).trim();
 		}
 		return null;
 	}
 
 	private JsonArray getForceArray(int indent) {
 		if (indent == 0 && getLastIndent() == 0) {
-			if (result instanceof JsonArray == false) {
+			if (!(result instanceof JsonArray)) {
 				result = new JsonArray();
 			}
 			return (JsonArray) result;
@@ -134,7 +131,7 @@ public class SimpleYamlParser {
 
 		final JsonObject last = (JsonObject) search(result, pendingIndents.size());
 		final String field = last.names().get(last.size() - 1);
-		if (last.get(field) instanceof JsonArray == false) {
+		if (!(last.get(field) instanceof JsonArray)) {
 			last.set(field, new JsonArray());
 		}
 		return (JsonArray) last.get(field);
@@ -142,7 +139,7 @@ public class SimpleYamlParser {
 
 	private void strictMuteToArray(int indent) {
 		if (indent == 0 && getLastIndent() == 0) {
-			if (result instanceof JsonArray == false) {
+			if (!(result instanceof JsonArray)) {
 				result = new JsonArray();
 			}
 			return;
@@ -157,7 +154,7 @@ public class SimpleYamlParser {
 
 		final JsonObject last = (JsonObject) search(result, pendingIndents.size());
 		final String field = last.names().get(last.size() - 1);
-		if (last.get(field) instanceof JsonArray == false) {
+		if (!(last.get(field) instanceof JsonArray)) {
 			last.set(field, new JsonArray());
 		} else {
 			((JsonArray) last.get(field)).add(new JsonObject());
@@ -196,11 +193,11 @@ public class SimpleYamlParser {
 			JsonArray array = (JsonArray) current1;
 
 			final JsonValue tmp;
-			if (array.size() == 0) {
+			if (array.isEmpty()) {
 				tmp = new JsonObject();
 				array.add(tmp);
 			} else {
-				tmp = array.get(array.size() - 1);
+				return array.get(array.size() - 1);
 			}
 			return tmp;
 		}
@@ -214,14 +211,14 @@ public class SimpleYamlParser {
 		JsonValue tmp = current.get(last);
 		if (tmp instanceof JsonArray) {
 			JsonArray array = (JsonArray) tmp;
-			if (array.size() == 0) {
+			if (array.isEmpty()) {
 				tmp = new JsonObject();
 				array.add(tmp);
 			} else {
 				tmp = array.get(array.size() - 1);
 			}
 		}
-		if (tmp instanceof JsonString) {
+		if (tmp.isString()) {
 			System.err.println("JsonString? " + tmp);
 			return null;
 		}

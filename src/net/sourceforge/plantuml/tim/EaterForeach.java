@@ -35,7 +35,7 @@
 package net.sourceforge.plantuml.tim;
 
 import net.sourceforge.plantuml.StringLocated;
-import net.sourceforge.plantuml.json.JsonArray;
+import com.eclipsesource.json.JsonArray;
 import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class EaterForeach extends Eater {

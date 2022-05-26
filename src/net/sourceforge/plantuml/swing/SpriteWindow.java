@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.swing;
@@ -65,11 +65,6 @@ public class SpriteWindow extends JFrame {
 	public SpriteWindow() {
 		super("SpriteWindows");
 		setIconImage(PSystemVersion.getPlantumlSmallIcon2());
-		// encode.addActionListener(new ActionListener() {
-		// public void actionPerformed(ActionEvent ae) {
-		// encode();
-		// }
-		// });
 
 		area.setFont(new Font("Courier", Font.PLAIN, 14));
 		area.setText("Copy an image to the clipboard.\nIt will be converted inside this window.\n");
@@ -80,9 +75,9 @@ public class SpriteWindow extends JFrame {
 		getContentPane().add(scroll, BorderLayout.CENTER);
 		setSize(400, 320);
 		setVisible(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-		startTimer();
+		//startTimer();
 	}
 
 	private void startTimer() {
@@ -124,7 +119,7 @@ public class SpriteWindow extends JFrame {
 	private void encodeColor(BufferedImage img, StringBuilder sb) {
 		sb.append("\n");
 		sb.append(SpriteUtils.encodeColor(img, "demo"));
-		
+
 	}
 
 	private void encodeCompressed(BufferedImage img, SpriteGrayLevel level, StringBuilder sb) {

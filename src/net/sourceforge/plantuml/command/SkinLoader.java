@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2023, Arnaud Roques
  *
  * Project Info:  http://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * http://plantuml.com/patreon (only 1$ per month!)
  * http://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.command;
@@ -47,11 +47,11 @@ import net.sourceforge.plantuml.style.NoStyleAvailableException;
 
 public class SkinLoader {
 
-	public final static Pattern2 p1 = MyPattern
+	public static final Pattern2 p1 = MyPattern
 			.cmpile("^([\\w.]*(?:\\<\\<.*\\>\\>)?[\\w.]*)[%s]+(?:(\\{)|(.*))$|^\\}?$");
 
-	final private List<String> context = new ArrayList<>();
-	final private TitledDiagram diagram;
+	private final List<String> context = new ArrayList<>();
+	private final TitledDiagram diagram;
 
 	public SkinLoader(TitledDiagram diagram) {
 		this.diagram = diagram;
@@ -85,14 +85,14 @@ public class SkinLoader {
 			lines = lines.trim().removeEmptyLines();
 
 			for (StringLocated s : lines) {
-				assert s.getString().length() > 0;
+				assert !s.getString().isEmpty();
 
 				if (s.getString().equals("}")) {
 					this.pop();
 					continue;
 				}
 				final Matcher2 m = p1.matcher(s.getString());
-				if (m.find() == false) {
+				if (!m.find()) {
 					throw new IllegalStateException();
 				}
 				if (m.group(2) != null) {
@@ -106,7 +106,6 @@ public class SkinLoader {
 			}
 			return CommandExecutionResult.ok();
 		} catch (NoStyleAvailableException e) {
-			// e.printStackTrace();
 			return CommandExecutionResult.error("General failure: no style available.");
 		}
 
